@@ -1,16 +1,58 @@
-# This is a sample Python script.
+from tkinter import *
+import cards
+SOUTH = 0
+WEST = 1
+NORTH = 2
+EAST = 3
+SEATS = ["South", "West", "North", "East"]
+PLAYER_NAMES = ["P1", "P2", "P3", "P4"]
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+# from PIL import Image, ImageTk
+
+# root = Tk()
+# root.title('Card Deck')
+# root.iconbitmap('images/ace_clubs_icon.png')
+# root.geometry("1400x900")
+# root.configure(background="green")
+
+# my_frame = Frame(root, bg="green")
+# my_frame.pack(pady=20)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+class Player:
+    def __init__(self, name: str, p_seat: str):
+        self.name = name
+        self.seat = p_seat
+        self.hand = []
+        self.distribution = []
+
+    def __repr__(self):
+        return f"{self.name} - {self.seat}"
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # Create four players
+    players = []
+    for player, seat in zip(PLAYER_NAMES, SEATS):
+        players.append(Player(player, seat))
+    deck = cards.Deck()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # Main loop creating boards
+    board_num = 0
+    look_further = True
+    # while board_num < 16:
+    while look_further:
+        board_num += 1
+        deck.shuffle()
+        deck.deal(players)
+        board = cards.Board(board_num)
+        board.display_all(players)
+
+        # player = players[SOUTH]
+        # for suit in player.hand.suits:
+        #     if suit.biddable > 2:
+        #         suit.display_suit_eval()
+        #         print(board_num)
+        #         look_further = False
+        # player.hand.display_hand_eval()
+    # root.mainloop()
